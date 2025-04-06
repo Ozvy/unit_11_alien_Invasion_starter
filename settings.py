@@ -8,7 +8,7 @@ class Settings:
         '''
         Some aspects of the game that can be changed easily.
         '''
-        self.name: str = 'Alien Invvasion'
+        self.name: str = 'Alien Invasion'
         self.screen_w = 1200
         self.screen_h = 800
         self.FPS = 60
