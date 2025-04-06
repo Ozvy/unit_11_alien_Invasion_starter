@@ -7,7 +7,9 @@ class AlienInvasion:
 
 
     Methods: 
-        run_game(): Allows the game to run and function, and sets framerate to 60.
+        run_game(self): Allows the game to run and function, and sets framerate . Also displays the game BG.
+        _check_events(self): Makes sure the game properly closes when the user closes the game.
+
     """
     def __init__(self):
         """
@@ -31,14 +33,21 @@ class AlienInvasion:
         Allows the game to run and function, and sets framerate . Also displays the game BG.
         """
         while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
-                    pygame.quit()
-                    sys.exit()
+            self._check_events()
+
             self.screen.blit(self.bg, (0,0))
             pygame.display.flip()
             self.clock.tick(self.settings.FPS)
+
+    def _check_events(self):
+        '''
+        Makes sure the game properly closes when the user closes the game.
+        '''
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
+                pygame.quit()
+                sys.exit()
                     
 
 
