@@ -1,6 +1,7 @@
 import sys
 import pygame
 from settings import Settings
+from ship import Ship
 class AlienInvasion:
     """
     The class that runs basically everything about this game.
@@ -27,7 +28,10 @@ class AlienInvasion:
 
         self.running = True
         self.clock = pygame.time.Clock()
-    
+
+        self.Ship = Ship(self)
+
+
     def run_game(self):
         """
         Allows the game to run and function, and sets framerate . Also displays the game BG.
@@ -35,9 +39,15 @@ class AlienInvasion:
         while self.running:
             self._check_events()
 
-            self.screen.blit(self.bg, (0,0))
-            pygame.display.flip()
+            self._update_screen()
             self.clock.tick(self.settings.FPS)
+
+
+    def _update_screen(self):
+        self.screen.blit(self.bg, (0,0))
+        self.Ship.draw()
+        pygame.display.flip()
+
 
     def _check_events(self):
         '''
@@ -48,6 +58,17 @@ class AlienInvasion:
                 self.running = False
                 pygame.quit()
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_event(event)
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_event(event)
+            
+    def _check_keydown_event(self, event):
+        pass
+    def _check_keyup_event(self, event):
+        pass
+
+
                     
 
 
