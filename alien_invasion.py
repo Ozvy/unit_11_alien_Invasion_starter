@@ -1,16 +1,20 @@
 import sys
 import pygame
 from settings import Settings
-from ship import Ship
+from ship import ship
 class AlienInvasion:
     """
     The class that runs basically everything about this game.
 
 
     Methods: 
-        run_game(self): Allows the game to run and function, and sets framerate . Also displays the game BG.
-        _check_events(self): Makes sure the game properly closes when the user closes the game.
-
+        run_game(self): Allows the game to run and function, and sets framerate .
+        _check_events(self): Makes sure the game properly closes when the user closes the game, and checks for
+        other events that run in the game.
+        _update_screen(self): displays everything on the screen and updates anything on the screen to its new position.
+        _check_keydown_event(self, event): Checks if the key is pressed down. if it is, move the ship.
+        _check_keyup_event(self, event): Checks if the key is not being pressed. if it isn't pressed, keep the ship completely still.
+        
     """
     def __init__(self):
         """
@@ -29,7 +33,8 @@ class AlienInvasion:
         self.running = True
         self.clock = pygame.time.Clock()
 
-        self.Ship = Ship(self)
+        self.ship = ship(self)
+        
 
 
     def run_game(self):
@@ -38,14 +43,17 @@ class AlienInvasion:
         """
         while self.running:
             self._check_events()
-
+            self.ship.update()
             self._update_screen()
             self.clock.tick(self.settings.FPS)
 
 
     def _update_screen(self):
+        '''
+         displays everything on the screen and updates anything on the screen to its new position.
+        '''
         self.screen.blit(self.bg, (0,0))
-        self.Ship.draw()
+        self.ship.draw()
         pygame.display.flip()
 
 
@@ -63,10 +71,28 @@ class AlienInvasion:
             elif event.type == pygame.KEYUP:
                 self._check_keyup_event(event)
             
+
     def _check_keydown_event(self, event):
-        pass
+        '''
+        Checks if the key is pressed down. if it is, move the ship.
+        '''
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            self.running = False
+            pygame.quit()
+            sys.exit()
+
     def _check_keyup_event(self, event):
-        pass
+        '''
+        Checks if the key is not being pressed. if it isn't pressed, keep the ship completely still.
+        '''
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
 
 
                     
