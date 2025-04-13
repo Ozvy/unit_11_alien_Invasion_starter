@@ -43,3 +43,4 @@ class Alien(Sprite):
         return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
     def draw_alien(self):
         self.screen.blit(self.image, self.rect)
+    

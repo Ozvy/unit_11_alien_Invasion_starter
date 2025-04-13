@@ -46,6 +46,8 @@ class AlienInvasion:
         self.ship = ship(self, Arsenal(self))
         self.alien_fleet = AlienFleet(self)
         self.alien_fleet.create_fleet()
+        self.impact_sound = pygame.mixer.Sound(self.settings.impact_sound)
+        self.impact_sound.set_volume(0.7)
 
         
         
@@ -59,9 +61,32 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.alien_fleet.update_fleet()
+            self._check_collisions()
             self._update_screen()
             self.clock.tick(self.settings.FPS)
 
+    def _check_collisions(self):
+        '''
+        Checks the ship, aliens and the bottom of the screen, as well as the collisions of projectiles.
+        '''
+        if self.ship.check_collisions(self.alien_fleet.fleet):
+            self._reset_level()
+
+        if self.alien_fleet.check_fleet_bottom():
+            self._reset_level()
+
+        collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
+        if collisions:
+            self.impact_sound.play()
+            self.impact_sound.fadeout(500)
+        
+        
+    
+    def _reset_level(self):
+        self.ship.arsenal.arsenal.empty()
+        self.alien_fleet.fleet.empty()
+        self.alien_fleet.create_fleet()
+        
 
     def _update_screen(self):
         '''

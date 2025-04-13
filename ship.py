@@ -41,14 +41,18 @@ class ship:
         self.image = pygame.transform.scale(self.image, (self.settings.ship_w, self.settings.ship_h))
         
         self.rect = self.image.get_rect()
-        self.rect.midleft = self.boundaries.midleft
+        self._center_ship()
         self.moving_right = False
         self.moving_left = False
         self.moving_up = False
         self.moving_down = False
-        self.x = float(self.rect.x)
+        
         self.y = float(self.rect.y)
         self.arsenal = arsenal
+
+    def _center_ship(self):
+        self.rect.midleft = self.boundaries.midleft
+        self.x = float(self.rect.x)
 
     def update(self):
         '''
@@ -91,3 +95,9 @@ class ship:
             pygame.sprite.Sprite or None: The newly fired bullet sprite if firing is successful, otherwise None.
         """
         return self.arsenal.fire_bullet()
+    
+    def check_collisions(self, other_group):
+        if pygame.sprite.spritecollideany(self, other_group):
+            self._center_ship()
+            return True
+        return False
