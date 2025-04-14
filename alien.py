@@ -6,15 +6,7 @@ if TYPE_CHECKING:
     from alien_fleet import AlienFleet
 
 class Alien(Sprite):
-    """
-    Represents a bullet fired by the player's ship.
-
-    Inherits from pygame.sprite.Sprite, allowing it to be easily managed in sprite groups.
-
-    Attributes:
-        
-        x (float): The bullet's horizontal position.
-    """
+ 
     def __init__(self, fleet: 'AlienFleet', x: float, y: float):
         super().__init__()
         self.fleet = fleet
@@ -35,12 +27,12 @@ class Alien(Sprite):
         
     def update(self):
         
-        self.x += self.settings.fleet_speed * self.settings.fleet_direction
+        self.y += self.settings.fleet_speed * self.settings.fleet_direction
         self.rect.x = self.x
         self.rect.y = self.y
         
     def check_edges(self):
-        return (self.rect.right >= self.boundaries.right or self.rect.left <= self.boundaries.left)
+        return (self.rect.bottom >= self.boundaries.bottom or self.rect.top <= self.boundaries.top)
     def draw_alien(self):
         self.screen.blit(self.image, self.rect)
     

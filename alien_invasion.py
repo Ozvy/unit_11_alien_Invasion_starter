@@ -80,7 +80,7 @@ class AlienInvasion:
         if self.ship.check_collisions(self.alien_fleet.fleet):
             self._check_game_status()
 
-        if self.alien_fleet.check_fleet_bottom():
+        if self.alien_fleet.check_fleet_right():
             self._check_game_status()
 
         collisions = self.alien_fleet.check_collisions(self.ship.arsenal.arsenal)
@@ -143,11 +143,7 @@ class AlienInvasion:
             K_Space: Plays a sound when pressed and makes the ship fire a bullet.
             K_q: exits out of the game.
         '''
-        if event.key == pygame.K_RIGHT:
-            self.ship.moving_right = True
-        elif event.key == pygame.K_LEFT:
-            self.ship.moving_left = True
-        elif event.key == pygame.K_UP:
+        if event.key == pygame.K_UP:
             self.ship.moving_up = True
         elif event.key == pygame.K_DOWN:
             self.ship.moving_down = True

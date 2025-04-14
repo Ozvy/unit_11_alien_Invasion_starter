@@ -42,17 +42,16 @@ class ship:
         
         self.rect = self.image.get_rect()
         self._center_ship()
-        self.moving_right = False
-        self.moving_left = False
         self.moving_up = False
         self.moving_down = False
         
-        self.y = float(self.rect.y)
+        
         self.arsenal = arsenal
 
     def _center_ship(self):
-        self.rect.midleft = self.boundaries.midleft
-        self.x = float(self.rect.x)
+        self.rect.midright = self.boundaries.midright
+        self.y = float(self.rect.y)
+        
 
     def update(self):
         '''
@@ -66,16 +65,12 @@ class ship:
         Updates the ship's horizontal and vertical position based on movement events, and makes sure
         the ship doesn't leave the boundaries of the window.
         """
-        if self.moving_right and self.rect.right < self.boundaries.right:
-            self.x += self.settings.ship_speed
-        if self.moving_left and self.rect.left > self.boundaries.left:
-            self.x -= self.settings.ship_speed
+
         if self.moving_up and self.rect.top > self.boundaries.top:
             self.y -= self.settings.ship_speed
         if self.moving_down and self.rect.bottom < self.boundaries.bottom:
             self.y += self.settings.ship_speed
 
-        self.rect.x = self.x
         self.rect.y = self.y
 
 

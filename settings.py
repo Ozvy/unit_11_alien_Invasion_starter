@@ -33,5 +33,5 @@ class Settings:
         self.alien_h = 40
         self.fleet_speed = 4
         self.fleet_direction = 1
-        self.fleet_drop_speed = 20
+        self.fleet_drop_speed = 5
     
